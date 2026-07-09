@@ -609,9 +609,15 @@
                     <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-5 border border-blue-100">
                         <div class="flex items-start gap-4">
                             <div class="relative flex-shrink-0">
-                                <img class="w-16 h-16 rounded-full shadow-md border-2 border-white" 
-                                     src="{% if dorm.landlord.userprofile.profile_picture %}{{ dorm.landlord.userprofile.profile_picture.url }}{% else %}{{ MEDIA_URL }}profile_pictures/default.jpg{% endif %}" 
-                                     alt="Landlord Profile Picture">
+                                {% if dorm.landlord.userprofile.has_profile_picture %}
+                                    <img class="w-16 h-16 rounded-full shadow-md border-2 border-white" 
+                                         src="{{ dorm.landlord.userprofile.profile_picture.url }}" 
+                                         alt="Landlord Profile Picture">
+                                {% else %}
+                                    <span class="w-16 h-16 rounded-full shadow-md border-2 border-white flex items-center justify-center bg-gradient-to-br from-blue-400 via-cyan-500 to-sky-600 text-white font-bold text-xl">
+                                        {{ dorm.landlord.get_initials }}
+                                    </span>
+                                {% endif %}
                                 {% if dorm.landlord.is_online %}
                                 <div class="absolute bottom-0 right-0 w-4 h-4 bg-green-500 rounded-full border-2 border-white" title="Online"></div>
                                 {% else %}
@@ -757,10 +763,12 @@
                             <div class="flex items-center justify-between mb-4">
                                 <div class="flex items-center">
                                     <div class="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden mr-4">
-                                        {% if review.user.userprofile.profile_picture %}
+                                        {% if review.user.userprofile.has_profile_picture %}
                                             <img src="{{ review.user.userprofile.profile_picture.url }}" alt="Profile" class="w-full h-full object-cover">
                                         {% else %}
-                                            <img src="{% static 'images/default_profile.jpg' %}" alt="Default Profile" class="w-full h-full object-cover">
+                                            <span class="w-full h-full flex items-center justify-center rounded-full bg-gradient-to-br from-blue-400 via-cyan-500 to-sky-600 text-white font-bold text-lg">
+                                                {{ review.user.get_initials }}
+                                            </span>
                                         {% endif %}
                                     </div>
                                     <div>
@@ -1832,10 +1840,12 @@ document.addEventListener("click", function (e) {
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center">
                             <div class="w-11 h-11 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden mr-3">
-                                {% if review.user.userprofile.profile_picture %}
+                                {% if review.user.userprofile.has_profile_picture %}
                                     <img src="{{ review.user.userprofile.profile_picture.url }}" alt="Profile" class="w-full h-full object-cover">
                                 {% else %}
-                                    <img src="{% static 'images/default_profile.jpg' %}" alt="Default Profile" class="w-full h-full object-cover">
+                                    <span class="w-full h-full flex items-center justify-center rounded-full bg-gradient-to-br from-blue-400 via-cyan-500 to-sky-600 text-white font-bold text-base">
+                                        {{ review.user.get_initials }}
+                                    </span>
                                 {% endif %}
                             </div>
                             <div>

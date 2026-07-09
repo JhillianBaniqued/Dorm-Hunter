@@ -8,7 +8,7 @@ def default_profile_image():
 
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True, default='profile_pictures/default.jpg')
+    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
     favorite_dorms = models.ManyToManyField(Dorm, through='FavoriteDorm', related_name='favorited_by')
     is_verified = models.BooleanField(default=False)
     verification_token = models.CharField(max_length=64, blank=True, null=True)
@@ -37,6 +37,17 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s Profile"
+
+    def has_profile_picture(self):
+        if not self.profile_picture:
+            return False
+
+        return self.profile_picture.name not in {
+            'profile_pictures/default.jpg',
+            'profile_pictures/default.png',
+            'profile_pictures/default_profile.jpg',
+            'profile_pictures/default_profile.png',
+        }
 
 class FavoriteDorm(models.Model):
     user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)

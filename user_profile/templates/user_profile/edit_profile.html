@@ -43,9 +43,13 @@
                 <!-- ── Profile Picture ── -->
                 <div class="flex flex-col items-center pt-8 pb-4 border-b border-gray-100">
                     <div class="relative group cursor-pointer" onclick="document.getElementById('profile_picture').click()">
+                            <div id="profile_picture_fallback"
+                                class="{% if request.user.userprofile.has_profile_picture %}hidden{% endif %} w-24 h-24 rounded-full bg-gradient-to-br from-blue-400 via-cyan-500 to-sky-600 text-white text-4xl font-bold shadow-md ring-4 ring-white flex items-center justify-center">
+                            {{ request.user.get_initials }}
+                        </div>
                         <img id="profile_picture_preview"
-                             class="w-24 h-24 rounded-full object-cover shadow-md ring-4 ring-white"
-                             src="{% if request.user.userprofile.profile_picture %}{{ request.user.userprofile.profile_picture.url }}{% else %}{{ MEDIA_URL }}profile_pictures/default.jpg{% endif %}"
+                             class="{% if not request.user.userprofile.has_profile_picture %}hidden{% endif %} absolute inset-0 w-24 h-24 rounded-full object-cover shadow-md ring-4 ring-white"
+                             src="{% if request.user.userprofile.has_profile_picture %}{{ request.user.userprofile.profile_picture.url }}{% endif %}"
                              alt="Profile Picture">
                         <div class="absolute inset-0 rounded-full bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -367,7 +371,13 @@
     /* ── Profile picture preview ── */
     function previewImage(event) {
         const reader = new FileReader();
-        reader.onload = () => document.getElementById('profile_picture_preview').src = reader.result;
+        reader.onload = () => {
+            const preview = document.getElementById('profile_picture_preview');
+            const fallback = document.getElementById('profile_picture_fallback');
+            preview.src = reader.result;
+            preview.classList.remove('hidden');
+            fallback.classList.add('hidden');
+        };
         reader.readAsDataURL(event.target.files[0]);
     }
 

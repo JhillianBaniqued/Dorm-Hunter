@@ -101,9 +101,15 @@
                         <!-- Main Info -->
                         <div class="flex items-start gap-4 flex-1">
                             <!-- Student Profile Picture -->
-                            <img src="{% if visit.student.userprofile.profile_picture %}{{ visit.student.userprofile.profile_picture.url }}{% else %}{{ MEDIA_URL }}profile_pictures/default.jpg{% endif %}" 
-                                 alt="{{ visit.student.username }}"
-                                 class="w-16 h-16 rounded-full object-cover shadow-md border-2 border-gray-200">
+                            {% if visit.student.userprofile.has_profile_picture %}
+                                <img src="{{ visit.student.userprofile.profile_picture.url }}"
+                                     alt="{{ visit.student.username }}"
+                                     class="w-16 h-16 rounded-full object-cover shadow-md border-2 border-gray-200">
+                            {% else %}
+                                <span class="w-16 h-16 rounded-full shadow-md border-2 border-gray-200 flex items-center justify-center bg-gradient-to-br from-blue-400 via-cyan-500 to-sky-600 text-white font-bold text-xl">
+                                    {{ visit.student.get_initials }}
+                                </span>
+                            {% endif %}
 
                             <div class="flex-1">
                                 <!-- Student Info -->

@@ -308,8 +308,13 @@
                         <!-- Profile Dropdown -->
                         <div class="relative z-50">
                             <button id="user-menu-button" class="flex items-center space-x-2 p-1.5 rounded-full hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 relative z-50">
-                                <img src="{% if request.user.userprofile.profile_picture %}{{ request.user.userprofile.profile_picture.url }}{% else %}{{ MEDIA_URL }}profile_pictures/default.jpg{% endif %}" 
-                                     alt="Profile" class="w-9 h-9 rounded-full object-cover border-2 border-gray-200">
+                                {% if request.user.userprofile.has_profile_picture %}
+                                    <img src="{{ request.user.userprofile.profile_picture.url }}" alt="Profile" class="w-9 h-9 rounded-full object-cover border-2 border-gray-200">
+                                {% else %}
+                                    <span class="w-9 h-9 rounded-full border-2 border-gray-200 bg-gradient-to-br from-blue-400 via-cyan-500 to-sky-600 text-white text-sm font-bold flex items-center justify-center shadow-sm">
+                                        {{ request.user.get_initials }}
+                                    </span>
+                                {% endif %}
                             </button>
     
                             <div id="user-dropdown" class="absolute right-0 top-14 z-[200] hidden w-56 bg-white divide-y divide-gray-100 rounded-lg shadow-lg border border-gray-200">

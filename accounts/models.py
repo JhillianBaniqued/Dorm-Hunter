@@ -59,6 +59,21 @@ class CustomUser(AbstractUser):
         blank=True
     )
 
+    def get_initials(self):
+        display_name = f"{self.first_name} {self.last_name}".strip()
+        if display_name:
+            parts = [part for part in display_name.split() if part]
+            initials = "".join(part[0] for part in parts[:2])
+            return initials.upper()
+
+        if self.username:
+            return self.username[0].upper()
+
+        if self.email:
+            return self.email[0].upper()
+
+        return "U"
+
     def __str__(self):
         return self.username
     
