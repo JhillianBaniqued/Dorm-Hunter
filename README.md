@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Dorm Finder (Django)
 
 Simple Django app for browsing dorms with search, filters, and a map.
@@ -109,7 +109,7 @@ cp env.example .env
 - Uses SQLite by default if PostgreSQL is not configured
 - `.env` and `venv/` are already in `.gitignore`
 - PostgreSQL packages (`psycopg2-binary`, `python-dotenv`, `dj-database-url`) are included in requirements.txt
-=======
+
 # Dorm Finder (Django)
 
 Simple Django app for browsing dorms with search, filters, and a map.
@@ -220,4 +220,3 @@ cp env.example .env
 - Uses SQLite by default if PostgreSQL is not configured
 - `.env` and `venv/` are already in `.gitignore`
 - PostgreSQL packages (`psycopg2-binary`, `python-dotenv`, `dj-database-url`) are included in requirements.txt
->>>>>>> ace80fbefe962ac2e4bd198946ce383acada18e1
