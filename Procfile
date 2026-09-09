@@ -1,0 +1,1 @@
+web: python manage.py migrate && python manage.py collectstatic --noinput && gunicorn smart_dorm_finder.wsgi:application --bind 0.0.0.0:$PORT --timeout 300 --workers 1
