@@ -66,10 +66,10 @@ class SendGridHTTPBackend(BaseEmailBackend):
                         subject=subject,
                     )
                     
-                    if html_content:
-                        mail.add_content(Content("text/html", html_content))
                     if text_content:
                         mail.add_content(Content("text/plain", text_content))
+                    if html_content:
+                        mail.add_content(Content("text/html", html_content))
                     
                     # Send email
                     response = sg.send(mail)

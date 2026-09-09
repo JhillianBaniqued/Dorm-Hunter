@@ -150,7 +150,7 @@ if database_url and 'postgres' in database_url.lower():
                 database_url,
                 conn_max_age=600,
                 conn_health_checks=True,
-                ssl_require=True
+                ssl_require=False
             )
         }
         
